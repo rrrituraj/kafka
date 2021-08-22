@@ -14,7 +14,6 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,7 +29,7 @@ class KafkaProducerControllerTest {
     @MockBean
     KafkaTemplate<String, Book> kafkaTemplate;
     @MockBean
-    ListenableFuture<SendResult<String,Book>> resultListenableFuture;
+    ListenableFuture<SendResult<String, Book>> resultListenableFuture;
 
     @BeforeEach
     void setUp() {
