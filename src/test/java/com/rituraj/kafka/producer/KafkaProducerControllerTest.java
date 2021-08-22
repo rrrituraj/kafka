@@ -16,6 +16,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(KafkaProducerController.class)
@@ -54,6 +55,25 @@ class KafkaProducerControllerTest {
                 .content(bookJson)
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isCreated());
+        //then
+    }
+
+    @Test
+    void postKafkaMessage_is4xxError() throws Exception {
+        Book book = new Book();
+        book.setBookName(null);
+        book.setAuthorName(null);
+
+
+        String bookJson = objectMapper.writeValueAsString(book);
+        doReturn(resultListenableFuture).when(kafkaTemplate).send(TOPIC, book);
+
+        //when
+        mockMvc.perform(post("/publish")
+                .content(bookJson)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().string("authorName - must not be null , bookName - must not be null"));
         //then
     }
 }

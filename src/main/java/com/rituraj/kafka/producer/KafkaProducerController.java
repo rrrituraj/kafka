@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 public class KafkaProducerController {
 
@@ -13,7 +15,7 @@ public class KafkaProducerController {
     private KafkaTemplate<String, Book> kafkaTemplate;
     private final String TOPIC = "TestTopic";
     @PostMapping("/publish")
-    public ResponseEntity<String> postKafkaMessage(@RequestBody final Book book){
+    public ResponseEntity<String> postKafkaMessage(@RequestBody final @Valid Book book){
         kafkaTemplate.send(TOPIC, book);
         return ResponseEntity.status(HttpStatus.CREATED).body("Published Successfully");
     }

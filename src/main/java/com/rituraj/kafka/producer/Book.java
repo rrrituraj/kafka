@@ -1,7 +1,11 @@
 package com.rituraj.kafka.producer;
 
+import javax.validation.constraints.NotNull;
+
 public class Book {
+    @NotNull
     private String bookName;
+    @NotNull
     private String authorName;
 
     public String getBookName() {
