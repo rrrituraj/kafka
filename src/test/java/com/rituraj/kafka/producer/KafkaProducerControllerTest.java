@@ -14,7 +14,10 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
+//import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,8 +32,8 @@ class KafkaProducerControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
     @MockBean
     KafkaTemplate<String, Book> kafkaTemplate;
-    @MockBean
-    ListenableFuture<SendResult<String, Book>> resultListenableFuture;
+    /*@MockBean
+    ListenableFuture<SendResult<String, Book>> resultListenableFuture;*/
 
     @BeforeEach
     void setUp() {
@@ -48,7 +51,7 @@ class KafkaProducerControllerTest {
 
 
         String bookJson = objectMapper.writeValueAsString(book);
-        doReturn(resultListenableFuture).when(kafkaTemplate).send(TOPIC, book);
+        when(kafkaTemplate.send(isA(String.class), isA(Book.class))).thenReturn(null);
 
         //when
         mockMvc.perform(post("/publish")
@@ -66,7 +69,8 @@ class KafkaProducerControllerTest {
 
 
         String bookJson = objectMapper.writeValueAsString(book);
-        doReturn(resultListenableFuture).when(kafkaTemplate).send(TOPIC, book);
+        when(kafkaTemplate.send(isA(String.class), isA(Book.class))).thenReturn(null);
+
 
         //when
         mockMvc.perform(post("/publish")
