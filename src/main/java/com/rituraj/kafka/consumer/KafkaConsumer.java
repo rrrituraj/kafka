@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class KafkaConsumer {
 
     static Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
@@ -15,4 +15,5 @@ public class KafkaConsumer {
     public void onMessage(ConsumerRecord<Integer, String> consumerRecord) {
         log.info("Consumer Record : {} ", consumerRecord);
     }
+
 }

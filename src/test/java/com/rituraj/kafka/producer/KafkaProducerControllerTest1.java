@@ -31,7 +31,7 @@ class KafkaProducerControllerTest1 {
         HttpEntity<Book> httpEntity = new HttpEntity<>(book, headers);
 
         //when
-        ResponseEntity<Book> responseEntity = restTemplate.exchange("/publishproducer", HttpMethod.POST, httpEntity, Book.class);
+        ResponseEntity<Book> responseEntity = restTemplate.exchange("/publish", HttpMethod.POST, httpEntity, Book.class);
 
         //then
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
