@@ -8,7 +8,7 @@ import org.springframework.kafka.listener.AcknowledgingMessageListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class LibraryEventsConsumerManualOffset implements AcknowledgingMessageListener<Integer, String> {
 
     static Logger log = LoggerFactory.getLogger(LibraryEventsConsumerManualOffset.class);
@@ -17,6 +17,6 @@ public class LibraryEventsConsumerManualOffset implements AcknowledgingMessageLi
     @KafkaListener(topics = "library-events", groupId = "library-events-listener-group")
     public void onMessage(ConsumerRecord<Integer, String> consumerRecord, Acknowledgment acknowledgment) {
         log.info("ConsumerRecord : {} ", consumerRecord);
-        acknowledgment.acknowledge();
+//        acknowledgment.acknowledge();
     }
 }
